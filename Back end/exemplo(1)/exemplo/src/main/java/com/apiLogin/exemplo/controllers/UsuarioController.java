@@ -38,7 +38,6 @@ public class UsuarioController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Access-Control-Allow-Origin", "*");
 
-            System.out.println(usuario.toString());
 
             if(usuario.isPresent()){
 
