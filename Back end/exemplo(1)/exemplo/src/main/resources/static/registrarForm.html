@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cadastro usuário</title>
+</head>
+<style>
+    * {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .borda-vermelha {
+        border: 3px solid red;
+    }
+
+    body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        background: #FFF0C7;
+    }
+
+    form {
+        height: 80%;
+        width: 90%;
+        background-color: rgba(255, 255, 255, 0.13);
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+        padding: 50px 35px;
+        background: #dde5f4;
+    }
+
+    .headCadastro {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        text-align: center;
+        background-color: #58b747;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        height: 20%;
+        margin-inline: -37px;
+        margin-top: -60px;
+    }
+
+    .headCadastro h2 {
+        font-size: 45px;
+        text-align: center;
+        justify-content: center;
+        color: white;
+    }
+
+    input {
+        display: block;
+        height: 50px;
+        width: 90%;
+        background-color: rgba(148, 132, 132, 0.07);
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-top: 1%;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    #selecionarCadastro {
+        display: block;
+        height: 50px;
+        width: 93%;
+        background-color: rgba(148, 132, 132, 0.07);
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+
+    #bodyCadastro {
+        padding-top: 3%;
+        height: 80%;
+        width: 100%;
+        display: flex;
+    }
+
+    #bodyCadastro div {
+        width: 50%;
+        height: 100%;
+    }
+
+    button {
+        margin-top: 5%;
+        width: 90%;
+        height: 10%;
+        background-color: #ffffff;
+        color: #080710;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #continuacaoCadastro {
+        border-radius: 3px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-top: 45px;
+    }
+</style>
+
+<body>
+    <div class="screen">
+        <form id="form-Cadastro">
+
+            <div class="headCadastro" style="background-color: #58b747;">
+                <img width="10%" src="src\imgs\Hotpot-removebg-preview.png" title="LogoERP">
+                <h2 id="tituloHead">Cadastro</h2>
+            </div>
+
+            <div id="bodyCadastro">
+
+                <div id="camposCadastro">
+
+                    <label for="usuario">Usuário</label>
+                    <input class="dadosPrimarios" type="text" id="usuario" name="usuario" required><br>
+
+                    <label for="email">Email</label>
+                    <input class="dadosPrimarios" type="email" name="email" id="email" required>
+
+                    <label for="senha">Senha</label>
+                    <input class="dadosPrimarios" type="password" id="senha" name="senha" required><br>
+
+                    <label for="nascimento">Nascimento / Emissão CNJ</label>
+                    <input class="dadosPrimarios" type="date" onchange="validarData(this)" name="nascimento" id="nascimento" required>
+
+                    <label for="tpCadastro">Tipo Cadastro</label>
+
+                    <select class="dadosPrimarios" name="tpCadastro" id="selecionarCadastro" required>
+                        <option value="/beneficiarioForm.html">Beneficiário</option>
+                        <option value="/prestadorForm.html">Prestador</option>
+                        <option value="/hospitalForm.html">Hospital</option>
+                    </select>
+
+                    <button type="submit" >Continuar</button>
+                </div>
+
+                <div id="continuacaoCadastro" style="background-color: gray;">
+                    <h1 style="color: white;">Finalize o cadastro inicial para continuar</h1>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</body>
+
+<script>
+
+    const formCadastro = document.getElementById("form-Cadastro")
+
+    formCadastro.addEventListener('submit', (e) => {
+        
+
+        const continuacaoCadastro = document.getElementById("continuacaoCadastro")
+
+        const dadosPrimarios = document.getElementsByClassName("dadosPrimarios")
+
+        continuacaoCadastro.style = null        
+
+        Array.from(dadosPrimarios).forEach(e => {
+            console.log(e)
+            e.style.backgroundColor = "gray"
+            e.setAttribute("readonly","true")
+        })
+
+        console.log(camposCadastro)
+
+        
+        e.preventDefault()
+
+        fetch(formCadastro.tpCadastro.value)
+            .then(response => response.text())
+            .then(html => continuacaoCadastro.innerHTML = html)
+            .catch((error) => {
+                console.error('Erro na requisição:', error);
+                alert('Ocorreu um erro na requisição.');
+            });
+
+    })
+
+    function validarData(element) {
+        /*
+         * Esta função adiciona um temporizador (timeout) de 3 segundos para corrigir um bug que validava a data
+         * instantaneamente após inserir apenas um dígito do ano.
+         */
+        if (element.value != "") {
+            setTimeout(() => {
+
+                const inputDate = new Date(element.value);
+                const hoje = new Date();
+                
+                if (inputDate >= hoje
+                    || inputDate <= new Date(1900, 0, 1)) {
+                    element.value = "";
+                    element.style.border = "3px solid red";
+                    alert("Data inválida!")
+                } else {
+                    element.style.border = "";
+                }
+            }, 3000);
+        }
+    }
+
+</script>
+
+</html>

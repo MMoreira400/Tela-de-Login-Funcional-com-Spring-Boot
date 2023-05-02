@@ -1,106 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/cssLogin.css">
     <title>Entrada do usuário</title>
 </head>
-<style>
-    * {
-        font-family: Arial, Helvetica, sans-serif;
-    }
 
-    body {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #dde5f4;
-
-    }
-
-    .headCadastro {
-        text-align: center;
-        background-position: center;
-        margin-top: -13%;
-        margin-inline: -9.2%;
-        border-top-right-radius: 10px;
-        border-top-left-radius: 10px;
-
-    }
-
-    .headCadastro img {
-        width: 40%;
-    }
-
-    form {
-        height: 520px;
-        width: 400px;
-        background-color: rgba(255, 255, 255, 0.13);
-        position: absolute;
-        transform: translate(-50%, -50%);
-        top: 50%;
-        left: 50%;
-        border-radius: 10px;
-        backdrop-filter: blur(5px);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-        padding: 50px 35px;
-    }
-
-    input {
-        display: block;
-        height: 50px;
-        width: 94%;
-        background-color: rgba(255, 255, 255, 0.07);
-        border-radius: 3px;
-        padding: 0 10px;
-        margin-top: 8px;
-        font-size: 14px;
-        font-weight: 300;
-    }
-
-    ::placeholder {
-        color: #5a5757;
-    }
-
-    button {
-        margin-top: 50px;
-        width: 100%;
-        background-color: #ffffff;
-        color: #080710;
-        padding: 15px 0;
-        font-size: 18px;
-        font-weight: 600;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .footerLogin {
-        margin-top: 10px;
-        text-align: center;
-    }
-
-    a {
-        color: #58b747;
-    }
-    a:visited {
-        color: #58b747;
-    }
-</style>
-
-<body>
+<body id="conteudo">
     <div class="screen">
-        <div class="screen">
-            <form id="form-Login">
-                <div class="headCadastro" style="background-color: #58b747;">
-                    <img src="src\imgs\Hotpot-removebg-preview.png" title="LogoERP">
-                </div>
+        <form id="form-Login">
+            <div class="headLogin" style="background-color: #58b747;">
+                <img src="src\imgs\Hotpot-removebg-preview.png" title="LogoERP">
+            </div>
+            <div id="bodyCadastro">
                 <h3>Login</h3>
 
                 <label for="usuario">Usuário</label>
@@ -115,59 +31,83 @@
 
                 <div class="footerLogin">
                     <span>Não possui uma conta?</span>
-                    <a href="LINK API REGISTRAR USUARIO">Crie uma</a>
+                    <a href="/registrarForm.html">Crie uma</a>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+</body>
 
-    <script>
-        const formLogin = document.getElementById("form-Login")
-
-
-        formLogin.addEventListener("submit", (evento) => {
-
-            evento.preventDefault()
-
-            const data =  {
-                    "username": document.getElementById("usuario").value,
-                    "senha": document.getElementById("senha").value
-                }
-                
-                console.log(data)
-            
-
-            fetch("http://localhost:8090/login", {
-
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-
-                body: JSON.stringify(data)
-
-            }).then(response => {
-                if (response.status == 200 /*OK*/) {
-                    alert("Entrada com sucesso!")
-                } else if (response.status == 401 /*Unauthorized*/) {
-                    alert("Credenciais inválidas!")
-                } else if (response.status == 404 /*Not Found*/) {
-                    alert("Usuário não encontrado!")
-                } else {
-                    console.log(response)
-                    alert("Ocorreu uma falha")
-                }
-            }).catch(e => {
-                alert("Erro:", e.toString())
-            })
+<script>
+    const formLogin = document.getElementById("form-Login")
 
 
+    formLogin.addEventListener("submit", (evento) => {
+
+        evento.preventDefault()
+
+        const data = {
+            "username": document.getElementById("usuario").value,
+            "senha": document.getElementById("senha").value
+        }
+
+        console.log(data)
+
+
+        fetch("http://localhost:8090/login", {
+
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(data)
+
+        }).then(response => {
+            if (response.status == 200 /*OK*/) {
+                alert("Entrada com sucesso!")
+            } else if (response.status == 401 /*Unauthorized*/) {
+                alert("Credenciais inválidas!")
+            } else if (response.status == 404 /*Not Found*/) {
+                alert("Usuário não encontrado!")
+            } else {
+                console.log(response)
+                alert("Ocorreu uma falha")
+            }
+        }).catch(e => {
+            alert("Erro:", e.toString())
         })
 
 
+    })
 
 
-    </script>
-</body>
+
+
+</script>
+<script registro>
+
+  /*  const trocarConteudo = document.querySelectorAll('a')
+
+    trocarConteudo.forEach(link => {
+        
+
+        link.addEventListener('click', (e) => {
+
+            e.preventDefault()
+
+            const conteudo = document.getElementById('conteudo')
+
+            console.log(link)
+            
+            fetch(link.href)
+                .then(resp => resp.text())
+                .then(html => conteudo.innerHTML = html)
+                .catch(e)
+
+        })
+    })*/
+
+</script>
 
 </html>
